@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Study, Zouz</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+        background: #080808;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+    }
+
+    .text {
+        display: flex;
+        gap: 8px;
+        font-size: clamp(45px, 10vw, 110px);
+        font-weight: 800;
+        color: white;
+        cursor: default;
+    }
+
+    .letter {
+        display: inline-block;
+        animation: float 2.5s ease-in-out infinite;
+        transition: transform 0.25s ease, color 0.25s ease;
+        text-shadow:
+            0 0 10px rgba(255,255,255,.25),
+            0 0 30px rgba(255,255,255,.12);
+    }
+
+    .letter:hover {
+        transform: translateY(-25px) scale(1.25) rotate(-5deg);
+        color: #8be9fd;
+        text-shadow:
+            0 0 10px #8be9fd,
+            0 0 35px #8be9fd,
+            0 0 70px #8be9fd;
+    }
+
+    .space {
+        width: 25px;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-14px) rotate(2deg);
+        }
+    }
+
+    .letter:nth-child(1) { animation-delay: .00s; }
+    .letter:nth-child(2) { animation-delay: .10s; }
+    .letter:nth-child(3) { animation-delay: .20s; }
+    .letter:nth-child(4) { animation-delay: .30s; }
+    .letter:nth-child(5) { animation-delay: .40s; }
+
+    .letter:nth-child(7) { animation-delay: .50s; }
+    .letter:nth-child(8) { animation-delay: .60s; }
+    .letter:nth-child(9) { animation-delay: .70s; }
+    .letter:nth-child(10) { animation-delay: .80s; }
+    .letter:nth-child(11) { animation-delay: .90s; }
+
+    .subtitle {
+        position: absolute;
+        bottom: 35px;
+        color: #666;
+        font-size: 14px;
+        letter-spacing: 3px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="text">
+
+    <span class="letter">S</span>
+    <span class="letter">t</span>
+    <span class="letter">u</span>
+    <span class="letter">d</span>
+    <span class="letter">y</span>
+
+    <span class="space"></span>
+
+    <span class="letter">Z</span>
+    <span class="letter">o</span>
+    <span class="letter">u</span>
+    <span class="letter">z</span>
+
+</div>
+
+<div class="subtitle">
+    MOVE YOUR MOUSE ✦
+</div>
+
+<script>
+
+const letters = document.querySelectorAll(".letter");
+
+document.addEventListener("mousemove", (e) => {
+
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    letters.forEach(letter => {
+
+        const rect = letter.getBoundingClientRect();
+
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        const distance = Math.sqrt(
+            Math.pow(mouseX - x, 2) +
+            Math.pow(mouseY - y, 2)
+        );
+
+        if (distance < 180) {
+
+            const strength = (180 - distance) / 180;
+
+            const moveX = (x - mouseX) * strength * 0.25;
+            const moveY = (y - mouseY) * strength * 0.25;
+
+            letter.style.transform =
+                `translate(${moveX}px, ${moveY}px) scale(${1 + strength * 0.25})`;
+
+        } else {
+
+            letter.style.transform = "";
+        }
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
